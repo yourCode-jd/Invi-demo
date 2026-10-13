@@ -1,0 +1,92 @@
+/* Local-only configuration preview control. It does not participate in invitation layout. */
+.demo-switcher {
+    position: fixed;
+    right: 14px;
+    top: 14px;
+    z-index: 30;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    border: 1px solid rgba(228, 204, 160, .45);
+    background: rgba(9, 43, 36, .88);
+    color: var(--gold-pale);
+    font: 600 9px/1 var(--sans);
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    backdrop-filter: blur(8px)
+}
+
+.demo-switcher select {
+    min-height: 28px;
+    width: auto;
+    padding: 4px 25px 4px 7px;
+    border-color: rgba(228, 204, 160, .45);
+    font-size: 10px;
+    color: var(--ivory)
+}
+
+.rsvp-status[data-state="error"] {
+    color: #f4c5b0
+}
+
+.rsvp-status[data-state="pending"] {
+    color: var(--gold-pale)
+}
+
+.rsvp-status[data-state="success"] {
+    color: #d9ead0
+}
+
+.field textarea {
+    appearance: none;
+    background: rgba(255, 255, 255, .055);
+    border: 1px solid rgba(226, 206, 165, .55);
+    border-radius: 0;
+    color: var(--ivory);
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 92px;
+    outline-offset: 3px;
+    padding: 13px 15px;
+    resize: vertical;
+    font: inherit;
+    line-height: 1.5
+}
+
+.field textarea::placeholder {
+    color: rgba(248, 243, 233, .55)
+}
+
+.field textarea:focus-visible {
+    outline: 2px solid var(--gold-pale);
+    outline-offset: 4px
+}
+
+.field label span {
+    font-size: .8em;
+    opacity: .72;
+    text-transform: none;
+    letter-spacing: 0
+}
+
+.rsvp-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap
+}
+
+@media (max-width:600px) {
+    .demo-switcher {
+        right: 10px;
+        top: 10px
+    }
+
+    .demo-switcher label {
+        display: none
+    }
+}

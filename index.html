@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -8,39 +9,159 @@
   <title>Aarav &amp; Meera — Invitation Demo</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="envelope.css" />
+  <link rel="stylesheet" href="config.css" />
+  <script src="invitation.config.js" defer></script>
   <script src="script.js" defer></script>
 </head>
+
 <body>
   <div class="paper-grain" aria-hidden="true"></div>
+  <aside class="demo-switcher" aria-label="Local demo preview">
+    <label for="demoInvitation">Demo preview</label>
+    <select id="demoInvitation"></select>
+  </aside>
   <main>
     <section class="intro" id="intro" aria-labelledby="intro-title">
-      <div class="frame frame--outer" aria-hidden="true"></div><div class="frame frame--inner" aria-hidden="true"></div>
-      <svg class="foliage foliage--left" viewBox="0 0 240 430" aria-hidden="true"><path d="M211 421C143 315 129 199 204 10M174 358c-77-4-102-57-93-90 55-2 91 38 93 90Zm-20-84c18-62 67-72 93-57-9 48-38 67-93 57Zm-24-76c-50-19-60-66-48-91 43 8 65 41 48 91Zm36-87c12-45 52-59 76-47-6 38-32 56-76 47Z" fill="none" stroke="currentColor" stroke-width="1.15"/></svg>
-      <svg class="foliage foliage--right" viewBox="0 0 240 430" aria-hidden="true"><path d="M211 421C143 315 129 199 204 10M174 358c-77-4-102-57-93-90 55-2 91 38 93 90Zm-20-84c18-62 67-72 93-57-9 48-38 67-93 57Zm-24-76c-50-19-60-66-48-91 43 8 65 41 48 91Zm36-87c12-45 52-59 76-47-6 38-32 56-76 47Z" fill="none" stroke="currentColor" stroke-width="1.15"/></svg>
+      <div class="frame frame--outer" aria-hidden="true"></div>
+      <div class="frame frame--inner" aria-hidden="true"></div>
+      <svg class="foliage foliage--left" viewBox="0 0 240 430" aria-hidden="true">
+        <path
+          d="M211 421C143 315 129 199 204 10M174 358c-77-4-102-57-93-90 55-2 91 38 93 90Zm-20-84c18-62 67-72 93-57-9 48-38 67-93 57Zm-24-76c-50-19-60-66-48-91 43 8 65 41 48 91Zm36-87c12-45 52-59 76-47-6 38-32 56-76 47Z"
+          fill="none" stroke="currentColor" stroke-width="1.15" />
+      </svg>
+      <svg class="foliage foliage--right" viewBox="0 0 240 430" aria-hidden="true">
+        <path
+          d="M211 421C143 315 129 199 204 10M174 358c-77-4-102-57-93-90 55-2 91 38 93 90Zm-20-84c18-62 67-72 93-57-9 48-38 67-93 57Zm-24-76c-50-19-60-66-48-91 43 8 65 41 48 91Zm36-87c12-45 52-59 76-47-6 38-32 56-76 47Z"
+          fill="none" stroke="currentColor" stroke-width="1.15" />
+      </svg>
       <p class="eyebrow">A CELEBRATION OF LOVE</p>
-      <div class="envelope-stage" aria-hidden="true"><div class="envelope" id="envelope"><div class="envelope-shadow"></div><div class="envelope-back"></div><div class="envelope-liner"></div><div class="letter"><div class="letter-inner"><span>THE WEDDING OF</span><strong>Aarav <i>&amp;</i> Meera</strong><small>12 · 12 · 2026</small><b>✦</b></div></div><div class="envelope-flap"></div><div class="envelope-front"></div><div class="wax-seal"><span>A</span><i>&amp;</i><span>M</span></div></div></div>
-      <p class="intro-kicker">AARAV &amp; MEERA</p><h1 id="intro-title">A beautiful beginning</h1>
-      <p class="intro-copy">Together with their families, Aarav and Meera invite you to share in a day of love, warmth, and celebration.</p>
-      <button id="openBtn" class="button button--gold" type="button" aria-controls="invitation"><span>Open invitation</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+      <div class="envelope-stage" aria-hidden="true">
+        <div class="envelope" id="envelope">
+          <div class="envelope-shadow"></div>
+          <div class="envelope-back"></div>
+          <div class="envelope-liner"></div>
+          <div class="letter">
+            <div class="letter-inner"><span>THE WEDDING OF</span><strong>Aarav <i>&amp;</i> Meera</strong><small>12 · 12
+                · 2026</small><b>✦</b></div>
+          </div>
+          <div class="envelope-flap"></div>
+          <div class="envelope-front"></div>
+          <div class="wax-seal"><span>A</span><i>&amp;</i><span>M</span></div>
+        </div>
+      </div>
+      <p class="intro-kicker">AARAV &amp; MEERA</p>
+      <h1 id="intro-title">A beautiful beginning</h1>
+      <p class="intro-copy">Together with their families, Aarav and Meera invite you to share in a day of love, warmth,
+        and celebration.</p>
+      <button id="openBtn" class="button button--gold" type="button" aria-controls="invitation"><span>Open
+          invitation</span><span class="button-arrow" aria-hidden="true">↗</span></button>
       <p class="demo-badge">Fictional demo · names, venue &amp; events are illustrative</p>
     </section>
 
     <section class="invitation" id="invitation" hidden aria-label="Fictional wedding invitation details">
-      <header class="hero"><div class="hero-orbit" aria-hidden="true"></div><p class="eyebrow">WITH JOY IN OUR HEARTS</p><p class="hero-pretitle">THE WEDDING CELEBRATION OF</p><h2 tabindex="-1">Aarav <em>&amp;</em> Meera</h2><p class="hero-subtitle">joyfully invite you to celebrate a new beginning</p><div class="ornament" aria-hidden="true"><span></span>✦<span></span></div><p class="hero-date">SATURDAY · 12 DECEMBER 2026</p><p class="hero-venue">The Grand Courtyard <b>·</b> Jaipur, Rajasthan</p><a class="scroll-link" href="#details">Discover the celebration <span aria-hidden="true">↓</span></a></header>
+      <header class="hero">
+        <div class="hero-orbit" aria-hidden="true"></div>
+        <p class="eyebrow">WITH JOY IN OUR HEARTS</p>
+        <p class="hero-pretitle">THE WEDDING CELEBRATION OF</p>
+        <h2 tabindex="-1">Aarav <em>&amp;</em> Meera</h2>
+        <p class="hero-subtitle">joyfully invite you to celebrate a new beginning</p>
+        <div class="ornament" aria-hidden="true"><span></span>✦<span></span></div>
+        <p class="hero-date">SATURDAY · 12 DECEMBER 2026</p>
+        <p class="hero-venue">The Grand Courtyard <b>·</b> Jaipur, Rajasthan</p><a class="scroll-link"
+          href="#details">Discover the celebration <span aria-hidden="true">↓</span></a>
+      </header>
 
-      <section class="details" id="details" aria-labelledby="details-title"><div class="section-heading"><p class="eyebrow eyebrow--ink">SAVE THE DATE</p><h2 id="details-title">Counting down<br><i>to forever</i></h2></div><div class="countdown" aria-label="Countdown to fictional wedding day"><div class="countdown-item"><strong id="days">—</strong><span>Days</span></div><div class="countdown-item"><strong id="hours">—</strong><span>Hours</span></div><div class="countdown-item"><strong id="minutes">—</strong><span>Minutes</span></div><div class="countdown-item"><strong id="seconds">—</strong><span>Seconds</span></div></div><div class="detail-rule" aria-hidden="true"><span></span>✦<span></span></div>
-        <div class="event-layout"><div class="event-intro"><p class="eyebrow eyebrow--ink">THE CELEBRATION</p><h3>An evening<br>in bloom.</h3><p>Gather with us beneath the Jaipur sky for a ceremony, a shared feast, and dancing into the night.</p><a class="button button--outline" href="https://www.google.com/maps/search/?api=1&amp;query=Jaipur+Rajasthan" target="_blank" rel="noopener noreferrer">View venue location <span aria-hidden="true">↗</span></a><p class="demo-note">Demo map opens a Jaipur search, not a confirmed venue.</p></div>
-          <ol class="schedule" aria-label="Fictional event schedule"><li><time datetime="2026-12-12T15:30:00+05:30">03:30 PM</time><div><span class="schedule-mark" aria-hidden="true">✦</span><h4>Welcome refreshments</h4><p>The Courtyard Entrance</p></div></li><li><time datetime="2026-12-12T16:00:00+05:30">04:00 PM</time><div><span class="schedule-mark" aria-hidden="true">✿</span><h4>Wedding ceremony</h4><p>Garden Pavilion</p></div></li><li><time datetime="2026-12-12T19:00:00+05:30">07:00 PM</time><div><span class="schedule-mark" aria-hidden="true">✧</span><h4>Dinner &amp; dancing</h4><p>The Grand Courtyard</p></div></li></ol>
+      <section class="details" id="details" aria-labelledby="details-title">
+        <div class="section-heading">
+          <p class="eyebrow eyebrow--ink">SAVE THE DATE</p>
+          <h2 id="details-title">Counting down<br><i>to forever</i></h2>
+        </div>
+        <div class="countdown" aria-label="Countdown to fictional wedding day">
+          <div class="countdown-item"><strong id="days">—</strong><span>Days</span></div>
+          <div class="countdown-item"><strong id="hours">—</strong><span>Hours</span></div>
+          <div class="countdown-item"><strong id="minutes">—</strong><span>Minutes</span></div>
+          <div class="countdown-item"><strong id="seconds">—</strong><span>Seconds</span></div>
+        </div>
+        <div class="detail-rule" aria-hidden="true"><span></span>✦<span></span></div>
+        <div class="event-layout">
+          <div class="event-intro">
+            <p class="eyebrow eyebrow--ink">THE CELEBRATION</p>
+            <h3>An evening<br>in bloom.</h3>
+            <p>Gather with us beneath the Jaipur sky for a ceremony, a shared feast, and dancing into the night.</p><a
+              id="venueLink" class="button button--outline"
+              href="https://www.google.com/maps/search/?api=1&amp;query=Jaipur+Rajasthan" target="_blank"
+              rel="noopener noreferrer">View venue location <span aria-hidden="true">↗</span></a>
+            <p id="venueNote" class="demo-note">Demo map opens a Jaipur search, not a confirmed venue.</p>
+          </div>
+          <ol id="eventSchedule" class="schedule" aria-label="Fictional event schedule">
+            <li><time datetime="2026-12-12T15:30:00+05:30">03:30 PM</time>
+              <div><span class="schedule-mark" aria-hidden="true">✦</span>
+                <h4>Welcome refreshments</h4>
+                <p>The Courtyard Entrance</p>
+              </div>
+            </li>
+            <li><time datetime="2026-12-12T16:00:00+05:30">04:00 PM</time>
+              <div><span class="schedule-mark" aria-hidden="true">✿</span>
+                <h4>Wedding ceremony</h4>
+                <p>Garden Pavilion</p>
+              </div>
+            </li>
+            <li><time datetime="2026-12-12T19:00:00+05:30">07:00 PM</time>
+              <div><span class="schedule-mark" aria-hidden="true">✧</span>
+                <h4>Dinner &amp; dancing</h4>
+                <p>The Grand Courtyard</p>
+              </div>
+            </li>
+          </ol>
         </div>
       </section>
-      <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title"><svg class="rsvp-foliage" viewBox="0 0 240 430" aria-hidden="true"><path d="M211 421C143 315 129 199 204 10M174 358c-77-4-102-57-93-90 55-2 91 38 93 90Zm-20-84c18-62 67-72 93-57-9 48-38 67-93 57Zm-24-76c-50-19-60-66-48-91 43 8 65 41 48 91Zm36-87c12-45 52-59 76-47-6 38-32 56-76 47Z" fill="none" stroke="currentColor" stroke-width="1.15"/></svg><div class="rsvp-copy"><p class="eyebrow">KINDLY REPLY</p><h2 id="rsvp-title">Will you join us?</h2><p>We would be honoured to celebrate this beautiful moment with you.</p></div>
-        <form id="rsvpForm" novalidate><div class="field"><label for="guestName">Your name</label><input id="guestName" name="guestName" autocomplete="name" placeholder="Enter your full name" maxlength="80" required /></div><div class="field"><label for="attendance">Attendance</label><select id="attendance" name="attendance" required><option value="">Select an option</option><option value="yes">Joyfully accepts</option><option value="no">Regretfully declines</option></select></div><div class="field"><label for="guestCount">Number of guests</label><select id="guestCount" name="guestCount"><option value="1">1 guest</option><option value="2">2 guests</option><option value="3">3 guests</option><option value="4">4 guests</option></select></div><button class="button button--gold" type="submit">Send demo RSVP <span aria-hidden="true">↗</span></button><p id="rsvpStatus" class="rsvp-status" aria-live="polite"></p><p class="demo-note demo-note--light">Demo only: confirmation appears in this browser. No RSVP is sent or stored.</p></form>
+      <section class="rsvp" id="rsvp" aria-labelledby="rsvp-title"><svg class="rsvp-foliage" viewBox="0 0 240 430"
+          aria-hidden="true">
+          <path
+            d="M211 421C143 315 129 199 204 10M174 358c-77-4-102-57-93-90 55-2 91 38 93 90Zm-20-84c18-62 67-72 93-57-9 48-38 67-93 57Zm-24-76c-50-19-60-66-48-91 43 8 65 41 48 91Zm36-87c12-45 52-59 76-47-6 38-32 56-76 47Z"
+            fill="none" stroke="currentColor" stroke-width="1.15" />
+        </svg>
+        <div class="rsvp-copy">
+          <p class="eyebrow">KINDLY REPLY</p>
+          <h2 id="rsvp-title">Will you join us?</h2>
+          <p>We would be honoured to celebrate this beautiful moment with you.</p>
+        </div>
+        <form id="rsvpForm" novalidate aria-describedby="rsvpStatus rsvpNote">
+          <div class="field"><label for="guestName">Your name</label><input id="guestName" name="guestName"
+              autocomplete="name" placeholder="Enter your full name" maxlength="80" required /></div>
+          <div class="field"><label for="attendance">Attendance</label><select id="attendance" name="attendance"
+              required>
+              <option value="">Select an option</option>
+              <option value="yes">Joyfully accepts</option>
+              <option value="no">Regretfully declines</option>
+            </select></div>
+          <div class="field"><label for="guestCount">Number of guests</label><select id="guestCount" name="guestCount">
+              <option value="1">1 guest</option>
+              <option value="2">2 guests</option>
+              <option value="3">3 guests</option>
+              <option value="4">4 guests</option>
+            </select></div>
+          <div class="field"><label for="guestMessage">A note <span>(optional)</span></label><textarea
+              id="guestMessage" name="message" rows="3" maxlength="500" placeholder="Share a message for the couple"></textarea></div>
+          <div class="rsvp-honeypot" aria-hidden="true"><label for="rsvpWebsite">Website</label><input
+              id="rsvpWebsite" name="website" type="text" tabindex="-1" autocomplete="off" /></div>
+          <button class="button button--gold" type="submit">Send demo RSVP <span
+              aria-hidden="true">↗</span></button>
+          <p id="rsvpStatus" class="rsvp-status" aria-live="polite"></p>
+          <p id="rsvpNote" class="demo-note demo-note--light">Demo only: confirmation appears in this browser. No RSVP
+            is sent or stored.</p>
+        </form>
       </section>
-      <footer><span>Made with love</span><strong>A <i>&amp;</i> M</strong><p>INVITATION CONCEPT · FICTIONAL DEMO CONTENT</p></footer>
+      <footer><span>Made with love</span><strong>A <i>&amp;</i> M</strong>
+        <p>INVITATION CONCEPT · FICTIONAL DEMO CONTENT</p>
+      </footer>
     </section>
   </main>
 </body>
+
 </html>
