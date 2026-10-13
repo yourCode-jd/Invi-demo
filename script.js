@@ -3,19 +3,25 @@ const envelope = document.getElementById('envelope');
 const intro = document.getElementById('intro');
 const invitation = document.getElementById('invitation');
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const openingDuration = reduceMotion ? 80 : 1900;
+let isOpening = false;
 
 function revealInvitation() {
   invitation.hidden = false;
+  window.scrollTo({ top: 0, behavior: 'auto' });
   intro.hidden = true;
-  window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-  document.querySelector('.hero h2').focus({ preventScroll: true });
+  const invitationTitle = document.querySelector('.hero h2');
+  invitationTitle.setAttribute('tabindex', '-1');
+  invitationTitle.focus({ preventScroll: true });
 }
 openButton.addEventListener('click', () => {
-  if (openButton.disabled) return;
+  if (isOpening) return;
+  isOpening = true;
   openButton.disabled = true;
+  openButton.setAttribute('aria-busy', 'true');
   openButton.querySelector('span').textContent = 'Opening…';
   envelope.classList.add('open');
-  window.setTimeout(revealInvitation, reduceMotion ? 80 : 1450);
+  window.setTimeout(revealInvitation, openingDuration);
 });
 
 // Fictional demo wedding date in Jaipur time (UTC+05:30).

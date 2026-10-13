@@ -1,0 +1,53 @@
+/* Keep the completed, scrollable invitation within the actual viewport at 320px. */
+html, body { min-width:0; }
+
+/* The envelope is a single, centered component. Only its own layers animate. */
+.envelope { transform-origin:50% 50%; }
+.envelope-back { z-index:1; }
+.envelope-liner { z-index:2; }
+.letter {
+  transform:translateY(0);
+  transition:transform .82s .72s cubic-bezier(.2,.78,.2,1), z-index 0s .72s;
+  z-index:3;
+}
+.envelope-front {
+  transform-origin:50% 100%;
+  transition:opacity .28s 1.45s ease, transform .52s 1.38s cubic-bezier(.22,.75,.2,1), z-index 0s 1.9s;
+  z-index:4;
+}
+.envelope-flap {
+  transform-origin:50% 0;
+  transition:transform .72s .08s cubic-bezier(.25,.75,.25,1), z-index 0s .8s;
+  z-index:6;
+}
+.wax-seal {
+  transition:opacity .2s ease, transform .32s cubic-bezier(.2,.8,.2,1);
+  z-index:7;
+}
+
+.envelope.open { transform:none; }
+.envelope.open .envelope-flap { transform:rotateX(180deg); z-index:1; }
+.envelope.open .wax-seal { opacity:0; transform:scale(.82); }
+.envelope.open .letter { transform:translateY(-122px); z-index:8; }
+.envelope.open .envelope-front { opacity:0; transform:translateY(26px); z-index:1; }
+.envelope.open .envelope-back,
+.envelope.open .envelope-liner { opacity:.2; transition:opacity .3s 1.42s ease; }
+.envelope.open .envelope-shadow { opacity:.48; transition:opacity .3s 1.42s ease; }
+
+/* Countdown cells use separate, stable line boxes for every number and label. */
+.countdown { align-items:start; gap:clamp(10px,3.6vw,52px); }
+.countdown .countdown-item { align-items:center; display:flex; flex-direction:column; gap:13px; min-width:0; text-align:center; }
+.countdown .countdown-item strong { display:block; font-variant-numeric:tabular-nums; line-height:1; min-height:1em; white-space:nowrap; }
+.countdown .countdown-item span { display:block; line-height:1.2; min-height:1.2em; white-space:nowrap; }
+
+@media (max-width:600px) {
+  .envelope.open { transform:scale(.89); }
+  .envelope.open .letter { transform:translateY(-122px); }
+  .countdown .countdown-item { gap:10px; }
+  .countdown .countdown-item strong { line-height:1.05; }
+  .countdown .countdown-item span { letter-spacing:.08em; line-height:1.3; }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .envelope.open .letter { transform:translateY(-122px); }
+}
