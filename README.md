@@ -1,6 +1,6 @@
 # Interactive Wedding Invitation Demo
 
-Three fictional invitation configurations are included: Aarav & Meera (Jaipur), Vivaan & Anaya (Udaipur), and Arjun & Isha (Alibaug).
+Two isolated premium templates are included: the original Botanical Wedding and Royal Punjabi Wedding. Four fictional customer configurations are included: Aarav & Meera (Jaipur), Vivaan & Anaya (Udaipur), Arjun & Isha (Alibaug), and Gursewak & Simran (Amritsar).
 
 ## Run locally
 
@@ -21,6 +21,9 @@ Use the fixed **Demo preview** selector, or open one of these URLs directly:
 - `http://localhost:5500/?demo=aarav-meera`
 - `http://localhost:5500/?demo=vivaan-anaya`
 - `http://localhost:5500/?demo=arjun-isha`
+- `http://localhost:5500/royal-punjabi.html?demo=gursewak-simran`
+
+The fixed **Preview template** selector on either template can switch locally between Botanical and Royal Punjabi configurations.
 
 ## Features
 - Layered CSS envelope reveal animation (card, liner, flap, seal and front)
@@ -47,6 +50,9 @@ Use the fixed **Demo preview** selector, or open one of these URLs directly:
 - `styles.css` — approved visual design system
 - `envelope.css` — approved envelope and countdown component behavior
 - `config.css` — local configuration preview control and RSVP status colors
+- `royal-punjabi.html` — isolated Royal Punjabi template markup
+- `royal-punjabi.css` — isolated Royal Punjabi design system and darbar-door animation
+- `royal-punjabi.js` — Royal Punjabi configuration renderer, countdown, selector, and RSVP adapter
 - `google-apps-script/Code.gs` — reusable Google Apps Script RSVP receiver
 - `google-apps-script/README.md` — Sheet schema, deployment, configuration, and verification steps
 

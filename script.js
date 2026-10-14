@@ -178,14 +178,15 @@ function setupDemoSwitcher() {
   Object.values(configs).forEach((config) => {
     const option = document.createElement("option");
     option.value = config.id;
-    option.textContent = config.label;
+    option.textContent = `${config.template === "royal-punjabi" ? "Royal Punjabi" : "Botanical"} — ${config.label}`;
     option.selected = config.id === activeInvitation.id;
     switcher.append(option);
   });
   switcher.addEventListener("change", () => {
-    const nextUrl = new URL(window.location.href);
-    nextUrl.searchParams.set("demo", switcher.value);
-    window.location.assign(nextUrl);
+    const config = configs[switcher.value];
+    const destination =
+      config.template === "royal-punjabi" ? "royal-punjabi.html" : "index.html";
+    window.location.assign(`${destination}?demo=${encodeURIComponent(switcher.value)}`);
   });
 }
 

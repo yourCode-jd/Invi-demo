@@ -5,6 +5,7 @@
 window.INVITATION_CONFIGS = {
   "aarav-meera": {
     id: "aarav-meera",
+    template: "botanical",
     label: "Aarav & Meera — Jaipur",
     couple: { firstName: "Aarav", secondName: "Meera" },
     wedding: {
@@ -39,6 +40,7 @@ window.INVITATION_CONFIGS = {
   },
   "vivaan-anaya": {
     id: "vivaan-anaya",
+    template: "botanical",
     label: "Vivaan & Anaya — Udaipur",
     couple: { firstName: "Vivaan", secondName: "Anaya" },
     wedding: {
@@ -73,6 +75,7 @@ window.INVITATION_CONFIGS = {
   },
   "arjun-isha": {
     id: "arjun-isha",
+    template: "botanical",
     label: "Arjun & Isha — Alibaug",
     couple: { firstName: "Arjun", secondName: "Isha" },
     wedding: {
@@ -104,5 +107,40 @@ window.INVITATION_CONFIGS = {
     colors: { emerald: "#1b473d", emeraldDeep: "#0a3029", ivory: "#f9f2e4", gold: "#bd9860", goldPale: "#e3c696" },
     music: { enabled: false, src: "", title: "" },
     rsvp: { endpoint: "", maxGuests: 3 },
+  },
+  "gursewak-simran": {
+    id: "gursewak-simran",
+    template: "royal-punjabi",
+    label: "Gursewak & Simran — Amritsar",
+    couple: { firstName: "Gursewak", secondName: "Simran" },
+    wedding: {
+      isoDate: "2027-04-17T18:30:00+05:30",
+      dateDisplay: "SATURDAY · 17 APRIL 2027",
+      shortDate: "17 · 04 · 2027",
+      venue: "The Saffron Haveli",
+      location: "Amritsar, Punjab",
+      mapUrl: "https://www.google.com/maps/search/?api=1&query=Amritsar+Punjab",
+    },
+    messages: {
+      introEyebrow: "A ROYAL PUNJABI CELEBRATION",
+      introTitle: "A union in full colour",
+      introCopy: "With the blessings of their families, Gursewak and Simran invite you to an evening of joy, tradition, and spirited celebration.",
+      heroOverline: "WITH LOVE, LAUGHTER & BLESSINGS",
+      heroPretitle: "CELEBRATING THE WEDDING OF",
+      heroSubtitle: "invite you to share in a celebration made for the heart",
+      celebrationTitle: "An evening<br>of splendour.",
+      celebrationCopy: "Gather beneath the arches for music, vows, generous tables, and a dance floor that carries on into the night.",
+      rsvpTitle: "Will you celebrate with us?",
+      rsvpCopy: "Your presence would make this joyous occasion even more memorable.",
+    },
+    schedule: [
+      { isoTime: "2027-04-17T17:30:00+05:30", time: "05:30 PM", icon: "✦", title: "Mehfil welcome", location: "The Saffron Courtyard" },
+      { isoTime: "2027-04-17T18:30:00+05:30", time: "06:30 PM", icon: "✿", title: "Anand celebration", location: "The Grand Darbar" },
+      { isoTime: "2027-04-17T20:30:00+05:30", time: "08:30 PM", icon: "✧", title: "Feast & bhangra", location: "Moonlit Terrace" },
+    ],
+    photos: [],
+    colors: { emerald: "#5a1021", emeraldDeep: "#250811", ivory: "#fff7e7", gold: "#d7a84f", goldPale: "#f3d790" },
+    music: { enabled: false, src: "", title: "" },
+    rsvp: { endpoint: "", maxGuests: 4 },
   },
 };

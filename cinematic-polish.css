@@ -1,0 +1,2 @@
+/* Structural override: author display rules must not defeat semantic hidden state. */
+[hidden] { display: none !important; }
