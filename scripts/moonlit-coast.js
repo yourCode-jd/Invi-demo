@@ -58,6 +58,24 @@ function renderGuests() {
   }
 }
 
+function splitHeading(id) {
+  const heading = document.getElementById(id);
+  if (!heading || heading.dataset.split) return;
+  const label = heading.textContent;
+  heading.setAttribute("aria-label", label.replace(/\n/g, " "));
+  heading.replaceChildren();
+  label.split("\n").forEach((line) => {
+    const lineElement = document.createElement("span");
+    lineElement.className = "line";
+    line.split(/(\s+)/).forEach((word) => {
+      if (/\s/.test(word)) lineElement.append(document.createTextNode(word));
+      else if (word) { const span = document.createElement("span"); span.className = "word"; span.setAttribute("aria-hidden", "true"); span.textContent = word; lineElement.append(span); }
+    });
+    heading.append(lineElement);
+  });
+  heading.dataset.split = "true";
+}
+
 function renderCinema() {
   const { messages, wedding, music } = cinemaConfig;
   cinemaDate = new Date(wedding.isoDate).getTime();
@@ -77,6 +95,7 @@ function renderCinema() {
   text("cinemaVenueNote", `Demo map opens a ${wedding.location} search, not a confirmed venue.`);
   renderSchedule();
   renderGuests();
+  ["openingTitle", "heroTitle", "portraitTitle", "countdownTitle", "feastTitle", "venueTitle", "rsvpTitle"].forEach(splitHeading);
   updateCountdown();
   if (music.enabled && music.src) {
     cinemaAudio.src = music.src;
@@ -147,43 +166,93 @@ function initializeScrollMotion() {
   }
   const { gsap, ScrollTrigger } = window;
   gsap.registerPlugin(ScrollTrigger);
-
   cinemaMotion?.revert();
   cinemaMotion = gsap.matchMedia();
   cinemaMotion.add({ mobile: "(max-width: 760px)", desktop: "(min-width: 761px)" }, (context) => {
     const mobile = context.conditions.mobile;
-    const distance = mobile ? 24 : 46;
-    const start = mobile ? "top 88%" : "top 76%";
-    const scrub = mobile ? .28 : .6;
-    const parallaxFactor = mobile ? .38 : 1;
-    const reveal = (target, trigger, from, to, options = {}) => gsap.fromTo(target, from, {
-      ...to,
-      scrollTrigger: {
-        trigger,
-        start: options.start || start,
-        toggleActions: "play none none reverse",
-        invalidateOnRefresh: true,
-      },
-    });
+    const distance = mobile ? 22 : 54;
+    const entranceStart = mobile ? "top 86%" : "top 72%";
+    const scrub = mobile ? .25 : .55;
+    const startScene = (trigger, timeline) => ScrollTrigger.create({ trigger, start: entranceStart, onEnter: () => timeline.play(), onEnterBack: () => timeline.play(), onLeaveBack: () => timeline.reverse(), invalidateOnRefresh: true });
+    const words = (selector) => gsap.utils.toArray(`${selector} .word`);
+    const drift = (target, vars) => gsap.to(target, { ...vars, repeat: -1, yoyo: true, ease: "sine.inOut" });
 
-    reveal("#scenePortrait .scene-copy", "#scenePortrait", { autoAlpha: 0, x: mobile ? 0 : distance, y: mobile ? distance : 0 }, { autoAlpha: 1, x: 0, y: 0, duration: mobile ? .62 : .9, ease: "power3.out" });
-    reveal("#sceneCountdown .countdown-content", "#sceneCountdown", { autoAlpha: 0, scale: mobile ? .97 : .94 }, { autoAlpha: 1, scale: 1, duration: mobile ? .62 : .85, ease: "power3.out" });
-    reveal("#sceneFeast .scene-copy", "#sceneFeast", { autoAlpha: 0, x: mobile ? 0 : -distance, y: mobile ? 20 : 0 }, { autoAlpha: 1, x: 0, y: 0, duration: mobile ? .6 : .85, ease: "power3.out" });
-    reveal("#cinemaSchedule", "#sceneFeast", { autoAlpha: 0, x: mobile ? 0 : distance, y: mobile ? 20 : 0 }, { autoAlpha: 1, x: 0, y: 0, duration: mobile ? .68 : .95, ease: "power3.out", delay: mobile ? .04 : .12 }, { start: mobile ? "top 68%" : start });
-    reveal("#sceneVenue .venue-card", "#sceneVenue", { autoAlpha: 0, clipPath: mobile ? "inset(8% 0 8% 0)" : "inset(0 48% 0 48%)" }, { autoAlpha: 1, clipPath: "inset(0 0% 0 0%)", duration: mobile ? .7 : .9, ease: "power3.inOut" });
-    reveal("#sceneRsvp .scene-copy", "#sceneRsvp", { autoAlpha: 0, y: mobile ? 22 : 42 }, { autoAlpha: 1, y: 0, duration: mobile ? .58 : .8, ease: "power3.out" });
-    reveal("#cinemaRsvpForm", "#sceneRsvp", { autoAlpha: 0, y: mobile ? 20 : 34, scale: mobile ? .99 : .97 }, { autoAlpha: 1, y: 0, scale: 1, duration: mobile ? .65 : .9, delay: mobile ? .06 : .12, ease: "power3.out" }, { start: mobile ? "top 64%" : start });
-    reveal(".portrait-image", "#scenePortrait", { clipPath: mobile ? "inset(5% 0 0 0)" : "inset(10% 0 0 0)", autoAlpha: .7 }, { clipPath: "inset(0% 0 0 0)", autoAlpha: 1, duration: mobile ? .78 : 1.12, ease: "power3.out" }, { start: mobile ? "top 80%" : "top 64%" });
+    /* Chapter 01: environment, contour and type move at three different depths. */
+    gsap.set([".estate-bloom", ".estate-contour"], { autoAlpha: 0 });
+    gsap.set(".estate-contour path", { strokeDasharray: 1300, strokeDashoffset: 1300 });
+    const estate = gsap.timeline({ paused: true }).to(".estate-media", { scale: 1.035, duration: .9, ease: "power2.out" }).to(".estate-bloom", { autoAlpha: 1, scale: 1, duration: .55, ease: "power2.out" }, "<.1").to(".estate-contour", { autoAlpha: 1, duration: .2 }, "<").to(".estate-contour path", { strokeDashoffset: 0, duration: 1.05, ease: "power2.inOut" }, "<");
+    startScene("#sceneEstate", estate);
+    if (window.scrollY < 4) estate.play();
 
-    gsap.to(".portrait-orbit", { rotate: mobile ? 34 : 115, scale: mobile ? 1.015 : 1.06, ease: "none", scrollTrigger: { trigger: "#scenePortrait", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
-    gsap.to(".orbital-ring--one", { rotate: mobile ? 17 : 42, ease: "none", scrollTrigger: { trigger: "#sceneCountdown", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
+    /* Chapter 02: portrait mask, orbit, petals, particles and word choreography. */
+    gsap.set([".portrait-petals i", ".portrait-particles b", ".portrait-frame"], { autoAlpha: 0, scale: .72 });
+    const portrait = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
+      .fromTo(".portrait-image", { clipPath: "inset(10% 0 0 0)", autoAlpha: .35 }, { clipPath: "inset(0 0 0 0)", autoAlpha: 1, duration: mobile ? .7 : 1.05 })
+      .to(".portrait-frame", { autoAlpha: 1, scale: 1, duration: .45 }, "<.12")
+      .to(".portrait-petals i", { autoAlpha: 1, scale: 1, stagger: .12, duration: .48 }, "<.06")
+      .to(".portrait-particles b", { autoAlpha: 1, stagger: .07, duration: .3 }, "<.12")
+      .fromTo(words("#portraitTitle"), { autoAlpha: 0, yPercent: 110, rotate: mobile ? 0 : 4 }, { autoAlpha: 1, yPercent: 0, rotate: 0, stagger: .055, duration: .5 }, "<.14")
+      .to("#scenePortrait .scene-copy > p:not(.chapter)", { autoAlpha: 1, y: 0, duration: .38 }, "<.12");
+    startScene("#scenePortrait", portrait);
+    gsap.set("#scenePortrait .scene-copy > p:not(.chapter)", { autoAlpha: 0, y: 16 });
+
+    /* Chapter 03: celestial geometry frames rolling countdown cells. */
+    gsap.set([".countdown-arc", ".countdown-grid > div", ".date-line"], { autoAlpha: 0 });
+    gsap.set(".countdown-arc path", { strokeDasharray: 1100, strokeDashoffset: 1100 });
+    const countdown = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
+      .fromTo(".countdown-content", { autoAlpha: 0, scale: .94 }, { autoAlpha: 1, scale: 1, duration: .6 })
+      .to(".countdown-arc", { autoAlpha: 1, duration: .15 }, "<")
+      .to(".countdown-arc path", { strokeDashoffset: 0, duration: .82, ease: "power2.inOut" }, "<")
+      .fromTo(words("#countdownTitle"), { autoAlpha: 0, yPercent: 100 }, { autoAlpha: 1, yPercent: 0, stagger: .05, duration: .42 }, "<.1")
+      .to(".countdown-grid > div", { autoAlpha: 1, y: 0, stagger: .08, duration: .36 }, "<.14")
+      .to(".date-line", { autoAlpha: 1, duration: .25 }, "<.16");
+    startScene("#sceneCountdown", countdown);
+
+    /* Chapter 04: veil, glints and schedule create a two-sided scene. */
+    gsap.set([".feast-glints i", "#cinemaSchedule li"], { autoAlpha: 0, y: 16 });
+    const feast = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
+      .fromTo(".feast-veil", { scaleX: 1 }, { scaleX: .28, duration: .8, ease: "power2.inOut" })
+      .fromTo("#sceneFeast .scene-copy", { autoAlpha: 0, x: mobile ? 0 : -distance, y: mobile ? distance : 0 }, { autoAlpha: 1, x: 0, y: 0, duration: .6 }, "<.14")
+      .fromTo(words("#feastTitle"), { autoAlpha: 0, yPercent: 100 }, { autoAlpha: 1, yPercent: 0, stagger: .05, duration: .4 }, "<.08")
+      .to("#cinemaSchedule", { autoAlpha: 1, x: 0, y: 0, duration: .52 }, "<.12")
+      .to("#cinemaSchedule li", { autoAlpha: 1, y: 0, stagger: .1, duration: .28 }, "<.12")
+      .to(".feast-glints i", { autoAlpha: 1, stagger: .08, duration: .2 }, "<");
+    gsap.set("#cinemaSchedule", { autoAlpha: 0, x: mobile ? 0 : distance, y: mobile ? 18 : 0 });
+    startScene("#sceneFeast", feast);
+
+    /* Chapter 05: the route leads the eye into a masked venue card. */
+    gsap.set([".route", ".pin", ".pin-pulse"], { autoAlpha: 0 });
+    const venue = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
+      .fromTo(".coast", { scale: .82, autoAlpha: 0 }, { scale: 1, autoAlpha: 1, stagger: .12, duration: .5 })
+      .to(".route", { autoAlpha: 1, scaleX: 1, duration: .72, ease: "power2.inOut" }, "<.1")
+      .to([".pin", ".pin-pulse"], { autoAlpha: 1, stagger: .1, duration: .25 }, "<.55")
+      .fromTo(".venue-card", { autoAlpha: 0, clipPath: mobile ? "inset(9% 0 9% 0)" : "inset(0 48% 0 48%)" }, { autoAlpha: 1, clipPath: "inset(0 0 0 0)", duration: .72, ease: "power3.inOut" }, "<.12")
+      .fromTo(words("#venueTitle"), { autoAlpha: 0, yPercent: 100 }, { autoAlpha: 1, yPercent: 0, stagger: .045, duration: .36 }, "<.12");
+    gsap.set(".route", { scaleX: 0, transformOrigin: "left center" });
+    startScene("#sceneVenue", venue);
+
+    /* Chapter 06: constellation, flowers, copy, frame and fields land in sequence. */
+    gsap.set([".rsvp-constellation", ".rsvp-flower", ".cinema-rsvp-form", ".cinema-rsvp-form .cinema-field", ".rsvp-button", ".rsvp-note"], { autoAlpha: 0 });
+    gsap.set(".rsvp-constellation path", { strokeDasharray: 1600, strokeDashoffset: 1600 });
+    const rsvp = gsap.timeline({ paused: true, defaults: { ease: "power3.out" } })
+      .to(".rsvp-constellation", { autoAlpha: 1, duration: .2 })
+      .to(".rsvp-constellation path", { strokeDashoffset: 0, duration: .9, ease: "power2.inOut" }, "<")
+      .to(".rsvp-flower", { autoAlpha: 1, scale: 1, stagger: .12, duration: .52 }, "<.12")
+      .fromTo("#sceneRsvp .scene-copy", { autoAlpha: 0, y: distance }, { autoAlpha: 1, y: 0, duration: .5 }, "<.08")
+      .fromTo(words("#rsvpTitle"), { autoAlpha: 0, yPercent: 100 }, { autoAlpha: 1, yPercent: 0, stagger: .045, duration: .38 }, "<.1")
+      .to(".cinema-rsvp-form", { autoAlpha: 1, y: 0, duration: .45 }, "<.15")
+      .to(".cinema-rsvp-form .cinema-field", { autoAlpha: 1, y: 0, stagger: .07, duration: .25 }, "<.1")
+      .to([".rsvp-button", ".rsvp-note"], { autoAlpha: 1, y: 0, stagger: .08, duration: .26 }, "<.05");
+    gsap.set([".rsvp-flower", ".cinema-rsvp-form", ".cinema-rsvp-form .cinema-field", ".rsvp-button", ".rsvp-note"], { scale: ".92", y: mobile ? 16 : 24 });
+    startScene("#sceneRsvp", rsvp);
+
+    /* Scroll-driven depth belongs to the environments; ambient movement belongs to each living scene. */
+    gsap.utils.toArray(".parallax-bg").forEach((item) => gsap.to(item, { yPercent: Number(item.dataset.speed || .15) * -100 * (mobile ? .35 : 1), ease: "none", scrollTrigger: { trigger: item.parentElement, start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } }));
+    gsap.to(".portrait-orbit", { rotate: mobile ? 38 : 118, ease: "none", scrollTrigger: { trigger: "#scenePortrait", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
+    gsap.to(".orbital-ring--one", { rotate: mobile ? 18 : 45, ease: "none", scrollTrigger: { trigger: "#sceneCountdown", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
     gsap.to(".orbital-ring--two", { rotate: mobile ? -22 : -56, ease: "none", scrollTrigger: { trigger: "#sceneCountdown", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
-    gsap.utils.toArray(".parallax-bg").forEach((item) => {
-      const travel = Number(item.dataset.speed || .15) * -100 * parallaxFactor;
-      gsap.to(item, { yPercent: travel, ease: "none", scrollTrigger: { trigger: item.parentElement, start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
-    });
-    gsap.to(".rsvp-flower--one", { rotate: mobile ? 48 : 68, ease: "none", scrollTrigger: { trigger: "#sceneRsvp", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
-    gsap.to(".rsvp-flower--two", { rotate: mobile ? -39 : -53, ease: "none", scrollTrigger: { trigger: "#sceneRsvp", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
+    gsap.to(".venue-map", { backgroundPosition: mobile ? "30px 16px" : "70px 38px", ease: "none", scrollTrigger: { trigger: "#sceneVenue", start: "top bottom", end: "bottom top", scrub, invalidateOnRefresh: true } });
+    drift(".estate-bloom", { scale: 1.14, duration: 3.8 }); drift(".portrait-particles b", { y: -12, stagger: .18, duration: 2.6 }); drift(".feast-glints i", { scale: 1.7, stagger: .26, duration: 1.55 }); drift(".pin-pulse", { scale: 1.9, autoAlpha: .1, duration: 1.65 }); drift(".rsvp-stars", { backgroundPosition: "45px 70px", duration: 8 });
     ["#sceneEstate", "#scenePortrait", "#sceneCountdown", "#sceneFeast", "#sceneVenue", "#sceneRsvp"].forEach((scene, index) => {
       gsap.to(`.story-nav div b:nth-child(${index + 1})`, { backgroundColor: "#e0bd80", scrollTrigger: { trigger: scene, start: "top 52%", end: "bottom 52%", toggleActions: "play reverse play reverse", invalidateOnRefresh: true } });
     });
@@ -207,7 +276,8 @@ function enterStory() {
   initializeScrollMotion();
   gsap.timeline({ defaults: { ease: "power3.out" } })
     .to("#heroOverline", { autoAlpha: 1, y: 0, duration: .38 })
-    .to("#heroTitle", { autoAlpha: 1, y: 0, duration: .7 }, "-=.12")
+    .to("#heroTitle", { autoAlpha: 1, y: 0, duration: .1 }, "-=.12")
+    .fromTo("#heroTitle .word", { autoAlpha: 0, yPercent: 110, rotate: 3 }, { autoAlpha: 1, yPercent: 0, rotate: 0, duration: .5, stagger: .055 }, "<")
     .to("#heroCopy", { autoAlpha: 1, y: 0, duration: .42 }, "-=.28")
     .to("#scrollCue", { autoAlpha: 1, y: 0, duration: .38 }, "-=.18")
     .to("#scrollCue i", { y: 5, duration: .65, repeat: -1, yoyo: true, ease: "sine.inOut" }, "+=.1");

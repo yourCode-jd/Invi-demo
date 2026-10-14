@@ -2,7 +2,7 @@
  * Reusable RSVP receiver for a Google Apps Script Web App.
  *
  * Keep spreadsheet IDs and the allow-list in Script Properties, never in the
- * public invitation files. See google-apps-script/README.md for setup.
+ * public invitation files. See integrations/google-apps-script/README.md for setup.
  */
 const RSVP_COLUMNS = [
   "Timestamp",

@@ -1,64 +1,96 @@
-# Interactive Wedding Invitation Demo
+# Premium Interactive Wedding Invitations
 
-Two isolated premium templates are included: the original Botanical Wedding and Royal Punjabi Wedding. Four fictional customer configurations are included: Aarav & Meera (Jaipur), Vivaan & Anaya (Udaipur), Arjun & Isha (Alibaug), and Gursewak & Simran (Amritsar).
+A lightweight, dependency-free collection of responsive wedding-invitation demos. It is designed as a reusable front-end foundation for customer invitations while keeping all sample names, dates, venues, maps, and RSVP responses clearly fictional.
 
-## Run locally
+## Technology stack
 
-Option A: open `index.html` in a browser.
+- Semantic HTML5
+- Modern CSS (custom properties, responsive layouts, reduced-motion support)
+- Vanilla JavaScript
+- GSAP and ScrollTrigger, loaded from CDN only by the Moonlit Coast cinematic template
+- Google Apps Script + Google Sheets reference implementation for optional RSVP storage
 
-Option B (recommended): from this folder, run:
+No package manager, build step, framework, paid builder, or private credentials are required.
+
+## Local development
+
+Serve the project from its root so all local assets and ES-independent scripts resolve correctly:
 
 ```bash
 python3 -m http.server 5500
 ```
 
-Then open http://localhost:5500
+Then open one of these local pages:
 
-## Local demo previews
+- `http://localhost:5500/` — Template 01, Botanical Wedding
+- `http://localhost:5500/royal-punjabi.html?demo=gursewak-simran` — Template 02, Royal Punjabi Wedding
+- `http://localhost:5500/cinematic-invitation.html` — Template 03, Moonlit Coast
 
-Use the fixed **Demo preview** selector, or open one of these URLs directly:
+Template 01 supports `?demo=aarav-meera`, `?demo=vivaan-anaya`, and `?demo=arjun-isha`. Its built-in selector can switch among compatible local demos.
 
-- `http://localhost:5500/?demo=aarav-meera`
-- `http://localhost:5500/?demo=vivaan-anaya`
-- `http://localhost:5500/?demo=arjun-isha`
-- `http://localhost:5500/royal-punjabi.html?demo=gursewak-simran`
+## Project structure
 
-The fixed **Preview template** selector on either template can switch locally between Botanical and Royal Punjabi configurations.
+```text
+.
+├── index.html                         # Template 01 public entry point
+├── royal-punjabi.html                 # Template 02 public entry point
+├── cinematic-invitation.html          # Template 03 public entry point
+├── assets/
+│   └── moonlit-coast/                 # Original local cinematic image assets
+├── config/
+│   ├── invitations.js                 # Template 01/02 fictional customer registry
+│   └── moonlit-coast.js               # Template 03 fictional configuration
+├── scripts/
+│   ├── botanical.js                   # Template 01 renderer, RSVP adapter, countdown
+│   ├── royal-punjabi.js               # Template 02 renderer, RSVP adapter, countdown
+│   └── moonlit-coast.js               # Template 03 renderer and motion system
+├── styles/
+│   ├── botanical.css                  # Template 01 visual system
+│   ├── envelope.css                   # Template 01 envelope behavior
+│   ├── config.css                     # Template 01 configuration controls
+│   ├── royal-punjabi.css              # Template 02 isolated styles
+│   ├── moonlit-coast.css              # Template 03 visual system
+│   ├── moonlit-polish.css             # Template 03 structural overrides
+│   └── moonlit-motion.css             # Template 03 motion-layer styles
+├── docs/
+│   └── cinematic-motion-storyboard.md # Template 03 motion plan
+└── integrations/
+    └── google-apps-script/            # Optional RSVP backend and deployment guide
+```
 
 ## Features
-- Layered CSS envelope reveal animation (card, liner, flap, seal and front)
-- Responsive premium botanical layout from 320px through desktop
-- Live countdown for an explicitly fictional event date
-- Fictional event schedule and placeholder maps search
-- RSVP adapter with safe local demo mode, server-confirmed success states, retry-safe submission IDs, and error handling
-- Accessible form labels and reduced-motion support
-- Config-driven customer details, schedules, colour tokens, photo metadata, music settings, and RSVP settings
-- Local preview selector for switching between fictional customers
 
-## Reuse this template
-
-- Add or update a customer object in `invitation.config.js`. This is the only file that should hold customer-specific names, date/time, venue, schedule, optional photo metadata, colours, and music settings.
-- Keep the wedding date as an ISO string with the couple's local UTC offset.
-- `script.js` renders the active configuration selected by `?demo=<config-id>`.
-- Set `rsvp.endpoint` only when a real HTTPS endpoint is available. With an empty endpoint, the form remains an explicit local demo and never sends or stores data. The supplied Google Sheets backend setup is in `google-apps-script/README.md`.
-
-## File structure
-
-- `invitation.config.js` — fictional customer configuration registry
-- `script.js` — configuration renderer, countdown, existing envelope trigger, and RSVP transport adapter
-- `index.html` — reusable semantic template
-- `styles.css` — approved visual design system
-- `envelope.css` — approved envelope and countdown component behavior
-- `config.css` — local configuration preview control and RSVP status colors
-- `royal-punjabi.html` — isolated Royal Punjabi template markup
-- `royal-punjabi.css` — isolated Royal Punjabi design system and darbar-door animation
-- `royal-punjabi.js` — Royal Punjabi configuration renderer, countdown, selector, and RSVP adapter
-- `google-apps-script/Code.gs` — reusable Google Apps Script RSVP receiver
-- `google-apps-script/README.md` — Sheet schema, deployment, configuration, and verification steps
+- Three visually isolated invitation templates
+- Config-driven fictional couples, dates, schedules, venues, colors, and optional music
+- Botanical envelope opening, Royal Punjabi darbar opening, and Moonlit Coast cinematic experience
+- Live countdowns, event schedules, map links, preview selectors, and responsive layouts
+- RSVP forms with native validation, explicit demo behavior, duplicate-safe client request IDs, timeout/error handling, and optional HTTPS backend support
+- Accessible keyboard controls and `prefers-reduced-motion` fallbacks
+- Original Moonlit Coast artwork stored locally; no placeholder image URLs
 
 ## RSVP integration
 
-The site does not include a production endpoint or any Google credentials. To go live, deploy the supplied Apps Script code, verify a test row in the customer-owned Sheet, then place its `/exec` URL in the appropriate configuration’s `rsvp.endpoint`. Until then, the browser explicitly labels the interaction as a demo and does not send data.
+The front end never contains Google credentials or spreadsheet access. Each template remains in safe demo mode while its `rsvp.endpoint` is empty; it clearly states that nothing is sent or saved.
 
-## Notes
-No paid builder required. Fonts load from Google Fonts when online and fall back to system fonts offline.
+For production RSVP storage, follow [the Apps Script deployment guide](integrations/google-apps-script/README.md), verify a real test row in the customer-owned Sheet, and only then configure that invitation’s HTTPS `/exec` endpoint.
+
+## Validation and current status
+
+- Static asset paths and all three public entry points are maintained after the folder cleanup.
+- JavaScript syntax checks and whitespace validation are the available code-level checks for this buildless project.
+- Templates 01 and 02 remain feature-isolated from the Moonlit Coast styles and motion code.
+- Current development work: Template 03 includes a documented cinematic-motion pass. Its final physical-device touch/recording QA remains a recommended follow-up because the local Chromium automation environment intermittently blocks remote touch emulation.
+
+## Completed work
+
+- Config-driven Botanical and Royal Punjabi templates with local demo switching
+- Google Apps Script RSVP backend source and deployment documentation
+- Isolated Moonlit Coast cinematic invitation with local artwork and GSAP-based scene motion
+- Folder organization, stable public entry points, and updated path references
+
+## Remaining production tasks
+
+- Perform customer-device QA and record acceptance videos for each template
+- Create and deploy a customer-owned Google Sheet/App Script endpoint per live invitation
+- Replace fictional content, maps, optional music, and visual assets with approved customer material
+- Deploy the static files to the chosen hosting provider

@@ -20,7 +20,7 @@ One tab safely serves many invitations. Filter the **Invitation ID** column for 
    - `RSVP_SHEET_NAME`: optional; defaults to `RSVPs`.
 3. In the Apps Script editor, run `setupRsvpSheet` once and approve Google’s authorization prompt. Confirm that the `RSVPs` tab has the exact header row above.
 4. Choose **Deploy → New deployment → Web app**. Execute as **Me**; set access to the smallest setting that allows invitees to use it (for a public invitation this is commonly **Anyone**). Deploy and copy the production URL ending in `/exec`.
-5. In `invitation.config.js`, set the relevant customer’s `rsvp.endpoint` to that `/exec` URL. Do not put the Sheet ID, OAuth tokens, or any Google credential in the frontend.
+5. In `config/invitations.js`, set the relevant customer’s `rsvp.endpoint` to that `/exec` URL. Do not put the Sheet ID, OAuth tokens, or any Google credential in the frontend.
 6. Submit one real test RSVP, then confirm the row is present in the intended Sheet before using the endpoint for guests.
 
 After backend code changes, create a new web-app deployment version and update the endpoint only if Google provides a new URL.
